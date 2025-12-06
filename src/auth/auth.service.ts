@@ -21,5 +21,13 @@ export class AuthService{
 
     const newUser = this.userRepository.create(details)
     return this.userRepository.save(newUser)
+
     }
+
+    async findUser(id:string){
+        const user  =  this.userRepository.findOneBy({id})
+        console.log(user)
+        return user
+    }
+    
 }

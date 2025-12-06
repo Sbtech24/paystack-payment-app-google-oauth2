@@ -5,15 +5,18 @@ import { GoogleAuthGuard } from './utils/Guards';
 import { AuthService } from './auth.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Users } from 'src/entities/user.entity';
+import { Transactions } from '../entities/transaction.entity';
+import { SessionSerilizer } from './utils/Serilizer';
 
 @Module({
     imports:[
-        TypeOrmModule.forFeature([Users])
+        TypeOrmModule.forFeature([Users,Transactions])
     ],
     controllers:[AuthController],
-    providers:[GoogleStrategy,GoogleAuthGuard,{
+    providers:[GoogleStrategy,AuthService, SessionSerilizer,GoogleAuthGuard,{
         provide:'AUTH_SERVICE',
-        useClass:AuthService
+        useClass:AuthService,
+    
     }],
 
 })

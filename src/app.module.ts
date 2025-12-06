@@ -7,6 +7,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { Users } from './entities/user.entity';
 import { PassportModule } from '@nestjs/passport';
+import { Transactions } from './entities/transaction.entity';
+import { PaymentModule } from './payment/payment.module';
 
 @Module({
   imports: [
@@ -23,7 +25,7 @@ import { PassportModule } from '@nestjs/passport';
         ssl: {
           rejectUnauthorized: false,
         },
-        entities:[Users],
+        entities:[Users,Transactions],
         logging:true,
         synchronize: true,
       }),
@@ -31,6 +33,7 @@ import { PassportModule } from '@nestjs/passport';
     PassportModule.register({session:true}),
 
     AuthModule,
+    PaymentModule,
   ],
 
   controllers: [AppController],
