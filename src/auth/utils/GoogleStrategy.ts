@@ -23,14 +23,19 @@ export class GoogleStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  async validate(accessToken: string, refreshToken: string, profile: Profile) {
-    console.log(accessToken);
-    console.log(refreshToken);
-    console.log(profile);
+async validate(accessToken: string, refreshToken: string, profile: Profile) {
+  const email = profile?.emails?.[0]?.value || "";
+  const displayname = profile.displayName;
+  
 
-    return this.authService.validateUser({
-      email: profile?.emails?.[0]?.value || "",
-      displayname: profile.displayName,
-    });
-  }
+
+  const user = await this.authService.validateUser({
+    email,
+    displayname,
+    provider: "google",
+  });
+
+
+  return user
+}
 }

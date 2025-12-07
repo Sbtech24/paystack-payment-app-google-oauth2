@@ -17,16 +17,16 @@ export class AuthController{
     }
 
   
-  // Step 2: Google callback endpoint
+
   @Get('google/redirect')
   @UseGuards(GoogleAuthGuard)
   async handleRedirect(@Req() req: any) {
-    // GoogleAuthGuard attaches the user info to req.user
-    const user = await this.authService.validateUser({
-      email: req.user?.emails?.[0]?.value || "",
-      displayname: req.user?.displayName || "",
    
-    });
+    const user = await this.authService.validateUser({
+  email: req.user.email,
+  displayname: req.user.displayName,
+
+});
 
  
     return {

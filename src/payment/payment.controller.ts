@@ -4,6 +4,7 @@ import {
   Body,
   Get,
   Param,
+  Query,
   Headers,
 } from '@nestjs/common';
 import { PaymentService } from './payment.service';
@@ -21,9 +22,16 @@ export class PaymentController {
   async webhook(@Headers() headers, @Body() payload) {
     return this.paymentService.handleWebhook(headers, payload);
   }
-  @Get(':reference/status')
-  async status(@Param('reference') reference: string) {
-    return this.paymentService.getStatus(reference);
+ @Get(':reference/status')
+  async status(@Param('reference') reference: string, @Query('refresh') refresh?: string) {
+    const refreshFlag = refresh === 'true';
+    const p = await this.paymentService.getStatus(reference, refreshFlag);
+    return {
+      reference: p.reference,
+      status: p.status,
+      amount: p.amount,
+      paid_at: p.paidAt,
+    };
   }
 }
 

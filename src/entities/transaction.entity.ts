@@ -14,8 +14,11 @@ export class Transactions {
   @Column()
   reference: string;
 
+  @Column({ nullable: true })
+  authorizationUrl: string;
+
   @Column({ type: 'int' })
-  amount: number; // Paystack amount is in kobo
+  amount: number; 
 
   @Column({ type: 'varchar', default: 'pending' })
   status: TransactionStatus;
