@@ -41,11 +41,12 @@ export class PaymentService {
         idempotent: true,
       };
     }
+    const paystackAmount = amount * 100;
 
     const res = await axios.post(
       'https://api.paystack.co/transaction/initialize',
       {
-        amount,
+        amount:paystackAmount,
         email: user.email 
       },
       {
