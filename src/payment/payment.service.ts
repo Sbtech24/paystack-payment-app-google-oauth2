@@ -71,33 +71,6 @@ export class PaymentService {
     return { reference, authorization_url };
   }
 
-  async handleWebhook(headers, payload) {
-    const signature = headers['x-paystack-signature'];
-
-    const hash = crypto
-      .createHmac('sha512', this.webhookSecret)
-      .update(JSON.stringify(payload))
-      .digest('hex');
-
-    if (hash !== signature) {
-      throw new UnauthorizedException('Invalid signature');
-    }
-
-    const event = payload.event;
-    const data = payload.data;
-
-    const tx = await this.txRepo.findOne({
-      where: { reference: data.reference },
-    });
-
-    if (tx) {
-      tx.status = data.status;
-      tx.paidAt = data.paid_at;
-      await this.txRepo.save(tx);
-    }
-
-    return { status: true };
-  }
 
 async getStatus(reference: string, refresh = false) {
     const tx = await this.txRepo.findOne({ where: { reference } });

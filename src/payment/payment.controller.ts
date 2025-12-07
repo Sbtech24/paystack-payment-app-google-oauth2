@@ -6,22 +6,35 @@ import {
   Param,
   Query,
   Headers,
+  UseGuards,
+  Req
 } from '@nestjs/common';
 import { PaymentService } from './payment.service';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('payments/paystack')
 export class PaymentController {
   constructor(private paymentService: PaymentService) {}
 
+  @UseGuards(AuthGuard('jwt'))
   @Post('initiate')
-  initiate(@Body() body: { amount: number; userId: string }) {
-    return this.paymentService.initiatePayment(body.amount, body.userId);
+ async initiate(@Req() req: any, @Body('amount') amount: number) {
+   
+    const user = req.user;
+
+    if (!user) {
+      throw new Error('User not authenticated');
+    }
+
+
+    const payment = await this.paymentService.initiatePayment(amount, user.id);
+
+    return payment;
   }
 
-  @Post('webhook')
-  async webhook(@Headers() headers, @Body() payload) {
-    return this.paymentService.handleWebhook(headers, payload);
-  }
+
+
+  @UseGuards(AuthGuard('jwt'))
  @Get(':reference/status')
   async status(@Param('reference') reference: string, @Query('refresh') refresh?: string) {
     const refreshFlag = refresh === 'true';
