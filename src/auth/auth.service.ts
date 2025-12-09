@@ -48,7 +48,7 @@ async generateWallet(userId: string) {
 
   const newWallet = this.walletRepository.create({
     WalletNumber,
-    balance: 0,
+    balance: "0",
     user: { id: userId }, 
   });
 

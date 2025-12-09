@@ -3,6 +3,7 @@ import { Users } from './user.entity';
 
 export type TransactionStatus = 'pending' | 'success' | 'failed';
 
+export type TransactionType = 'deposit' | 'transfer'
 @Entity()
 export class Transactions {
   @PrimaryGeneratedColumn('uuid')
@@ -19,6 +20,9 @@ export class Transactions {
 
   @Column({ type: 'decimal',nullable:true })
   amount: number; 
+
+  @Column({ type: 'varchar',nullable:true })
+  type: TransactionType;
 
   @Column({ type: 'varchar', default: 'pending' })
   status: TransactionStatus;
