@@ -17,7 +17,7 @@ export class Transactions {
   @Column({ nullable: true })
   authorizationUrl: string;
 
-  @Column({ type: 'int' })
+  @Column({ type: 'decimal',nullable:true })
   amount: number; 
 
   @Column({ type: 'varchar', default: 'pending' })

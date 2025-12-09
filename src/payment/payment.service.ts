@@ -7,7 +7,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Transactions } from '../entities/transaction.entity';
 import { Repository } from 'typeorm';
 import { ConfigService } from '@nestjs/config';
-import * as crypto from 'crypto';
+
 
 @Injectable()
 export class PaymentService {

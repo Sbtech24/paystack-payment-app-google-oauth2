@@ -10,10 +10,11 @@ import { SessionSerilizer } from './utils/Serilizer';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtStrategy } from './utils/JwtStrategy'
+import { Wallet } from 'src/entities/wallet.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Users, Transactions]),
+    TypeOrmModule.forFeature([Users, Transactions,Wallet]),
     ConfigModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],

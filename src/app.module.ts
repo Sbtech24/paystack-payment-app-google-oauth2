@@ -9,6 +9,7 @@ import { Users } from './entities/user.entity';
 import { PassportModule } from '@nestjs/passport';
 import { Transactions } from './entities/transaction.entity';
 import { PaymentModule } from './payment/payment.module';
+import { Wallet } from './entities/wallet.entity';
 
 @Module({
   imports: [
@@ -25,7 +26,7 @@ import { PaymentModule } from './payment/payment.module';
         ssl: {
           rejectUnauthorized: false,
         },
-        entities:[Users,Transactions],
+        entities:[Users,Transactions,Wallet],
         logging:true,
         synchronize: true,
       }),
