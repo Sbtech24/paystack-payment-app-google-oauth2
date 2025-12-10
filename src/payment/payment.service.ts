@@ -69,10 +69,13 @@ export class PaymentService {
 
     const { reference, authorization_url } = res.data.data;
 
+    const type  = "deposit"
+
     const tx = this.txRepo.create({
       reference,
       amount,
       user,
+      type:type,
       status: 'pending',
       authorizationUrl: authorization_url,
     });
@@ -169,14 +172,14 @@ export class PaymentService {
       return { status: true, message: 'Already processed' };
     }
 
-    // Update transaction status
+
     tx.status = data.status;
     tx.paidAt = data.paid_at;
     console.log(data.amount);
 
     await this.txRepo.save(tx);
 
-    // Credit wallet only if successful
+    
     if (data.status === 'success') {
       const wallet = await this.walletRepo.findOne({
         where: { user: { id: tx.user.id } },

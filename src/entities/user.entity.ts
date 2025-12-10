@@ -1,11 +1,20 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany, CreateDateColumn, UpdateDateColumn, OneToOne } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  OneToMany,
+  CreateDateColumn,
+  UpdateDateColumn,
+  OneToOne,
+} from 'typeorm';
 import { Transactions } from './transaction.entity';
 import { Wallet } from './wallet.entity';
+import { ApiKeys } from './api-key.entity';
 
 @Entity({ name: 'users' })
 export class Users {
   @PrimaryGeneratedColumn('uuid')
-  id: string; 
+  id: string;
 
   @Column({ unique: true })
   email: string;
@@ -14,17 +23,20 @@ export class Users {
   displayname: string;
 
   @Column({ nullable: true })
-  picture: string; 
+  picture: string;
 
   @Column({ default: 'google' })
   provider: string; // e.g., 'google', useful for future auth providers
 
-  @OneToOne(()=>Wallet,(wallet)=>wallet.user)
-  wallet:Wallet;
+  @OneToOne(() => Wallet, (wallet) => wallet.user)
+  wallet: Wallet;
 
   @OneToMany(() => Transactions, (transaction) => transaction.user)
   transactions: Transactions[];
 
+  @OneToMany(() => ApiKeys, (apiKey) => apiKey.user)
+  apiKeys: ApiKeys[];
+  
   @CreateDateColumn({ type: 'timestamptz' })
   createdAt: Date;
 

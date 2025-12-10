@@ -10,6 +10,9 @@ import { PassportModule } from '@nestjs/passport';
 import { Transactions } from './entities/transaction.entity';
 import { PaymentModule } from './payment/payment.module';
 import { Wallet } from './entities/wallet.entity';
+import { ApiKeyModule } from './api-key/api-key.module';
+import { ApiKeys } from './entities/api-key.entity';
+
 
 @Module({
   imports: [
@@ -26,7 +29,7 @@ import { Wallet } from './entities/wallet.entity';
         ssl: {
           rejectUnauthorized: false,
         },
-        entities:[Users,Transactions,Wallet],
+        entities:[Users,Transactions,Wallet,ApiKeys],
         logging:true,
         synchronize: true,
       }),
@@ -35,6 +38,7 @@ import { Wallet } from './entities/wallet.entity';
 
     AuthModule,
     PaymentModule,
+    ApiKeyModule,
   ],
 
   controllers: [AppController],
