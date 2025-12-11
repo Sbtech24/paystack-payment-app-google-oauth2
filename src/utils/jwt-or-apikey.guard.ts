@@ -1,4 +1,5 @@
 import { Injectable, CanActivate, ExecutionContext, UnauthorizedException } from '@nestjs/common';
+import { Reflector } from '@nestjs/core';
 import { JwtService } from '@nestjs/jwt';
 import { ApiKeyService } from '../api-key/api-key.service';
 import { Request } from 'express';
@@ -8,12 +9,17 @@ export class JwtOrApiKeyGuard implements CanActivate {
   constructor(
     private jwtService: JwtService,
     private apiKeyService: ApiKeyService,
+    private reflector: Reflector,
   ) {}
-
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request: Request = context.switchToHttp().getRequest();
-    const requiredPermission = (context.getHandler() as any).requiredApiKeyPermission || 'read';
+
+    // properly get metadata
+    const requiredPermission = this.reflector.get<'read' | 'deposit' | 'transfer'>(
+      'requiredApiKeyPermission',
+      context.getHandler(),
+    );
 
     const authHeader = request.headers['authorization'];
     if (authHeader?.startsWith('Bearer ')) {
@@ -22,12 +28,9 @@ export class JwtOrApiKeyGuard implements CanActivate {
         const decoded = this.jwtService.verify(token);
         request['user'] = decoded;
         return true;
-      } catch (err) {
-   
-      }
+      } catch (err) {}
     }
 
- 
     const apiKey = request.headers['x-api-key'] as string;
     if (apiKey) {
       try {

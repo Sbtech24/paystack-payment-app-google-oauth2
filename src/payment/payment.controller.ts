@@ -10,7 +10,6 @@ import {
   HttpCode,
 } from '@nestjs/common';
 import { PaymentService } from './payment.service';
-import { AuthGuard } from '@nestjs/passport';
 import {
   ApiTags,
   ApiOperation,
@@ -80,7 +79,7 @@ export class StatusResponseDto {
 export class PaymentController {
   constructor(private paymentService: PaymentService) {}
 
-   @UseGuards(JwtOrApiKeyGuard)
+  @UseGuards(JwtOrApiKeyGuard)
   @ApiBearerAuth()
   @ApiKeyPermission('deposit')
   @Post('deposit')
