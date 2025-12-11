@@ -118,22 +118,22 @@ export class ApiKeyController {
     return this.apiKeyService.rolloverApiKey(expiredKeyId, body.expiry);
   }
 
-  @UseGuards(AuthGuard('jwt'))
-  @ApiBearerAuth()
-  @Post('validate')
-  @ApiOperation({ summary: 'Validate an API key' })
-  @ApiBody({ type: ValidateApiKeyDto })
-  @ApiResponse({ status: 200, description: 'API key is valid', type: ValidateApiKeyResponseDto })
-  async validateKey(@Body() body: ValidateApiKeyDto) {
-    const user = await this.apiKeyService.validateKey(
-      body.key,
-      body.permission,
-    );
+//   @UseGuards(AuthGuard('jwt'))
+//   @ApiBearerAuth()
+//   @Post('validate')
+//   @ApiOperation({ summary: 'Validate an API key' })
+//   @ApiBody({ type: ValidateApiKeyDto })
+//   @ApiResponse({ status: 200, description: 'API key is valid', type: ValidateApiKeyResponseDto })
+//   async validateKey(@Body() body: ValidateApiKeyDto) {
+//     const user = await this.apiKeyService.validateKey(
+//       body.key,
+//       body.permission,
+//     );
 
-    return {
-      valid: true,
-      userId: user.id,
-      email: user.email,
-    };
-  }
+//     return {
+//       valid: true,
+//       userId: user.id,
+//       email: user.email,
+//     };
+//   }
 }
