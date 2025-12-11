@@ -12,7 +12,7 @@ export class Transactions {
   @ManyToOne(() => Users, (user) => user.transactions, { onDelete: 'SET NULL' })
   user: Users;
 
-  @Column()
+  @Column({ nullable: true })
   reference: string;
 
   @Column({ nullable: true })
