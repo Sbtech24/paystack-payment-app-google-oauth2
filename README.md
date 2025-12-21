@@ -1,10 +1,11 @@
-# Backend API — Google Sign-In & Paystack Payments
+# Wallet Service — Google Sign-In & Paystack Payments
 
-This is a **NestJS backend application** that provides:
+This is a  **Wallet service built with Nest Js ** that provides:
 
 - **Google OAuth 2.0 sign-in** (server-side)
 - **Paystack payment integration** (initialize payments, verify transactions, webhook handling)
 - **User & Transaction management** with PostgreSQL using TypeORM
+- **User wallet with transasction simulation- Transfer,deposit,Real time balance updates** with PostgreSQL using TypeORM
 
 ---
 
@@ -27,10 +28,13 @@ This is a **NestJS backend application** that provides:
 
 - Secure Google Sign-In flow
 - Initialize Paystack payments
+- Deposit funds
+- Transfer funds from one user to another
 - Handle Paystack webhooks
 - Check transaction status
 - Store users and transactions in PostgreSQL
 - JWT token generation (optional)
+- Get wallet balnace
 
 ---
 
@@ -41,7 +45,8 @@ This is a **NestJS backend application** that provides:
 - PostgreSQL  
 - Axios (for HTTP requests)  
 - Passport & passport-google-oauth20  
-- Paystack API  
+- Paystack API
+- Crypto 
 
 ---
 
@@ -60,3 +65,12 @@ This is a **NestJS backend application** that provides:
 ```bash
 git clone <repo-url>
 cd <repo-folder>
+npm i
+```
+set .env - check .env.example
+
+2. Run the application:
+ ```bash
+ npm run start:dev
+
+
